@@ -128,22 +128,3 @@ class guild_data:
     if voice_client and voice_client.is_connected() and await voice_client.move_to(voice_channel):
       self.voice_channel = voice_channel
 
-  async def lefny(self):
-    if not self.is_connected():
-      await self.join_channel()
-    if len(self.list) > 0:
-      if self.is_paused():
-        self.resume()
-        return
-      if self.is_playing():
-        return
-    if self.is_playing():
-      self.queue = []
-      self.get_client().stop()
-    self.list = [1, 2, 3, 4, 5, 6, 7]
-    random.shuffle(self.list)
-    await self.play_from_list()
-
-  async def play_from_list(self):
-    if len(self.list) > 0:
-      self.get_client().play(discord.FFmpegPCMAudio(source="leef/"+str(self.list.pop()) + ".mp3"), after=lambda e: asyncio.run_coroutine_threadsafe(self.play_from_list(), guild_data.bot.loop))
