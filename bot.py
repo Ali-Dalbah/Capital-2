@@ -92,17 +92,6 @@ async def move(ctx):
     await ctx.send('Moving')
     await map[ctx.guild].move_to(ctx.message.author.voice.channel)
 
-@bot.command(name='lefny', help='')
-async def lefny(ctx):
-  if not ctx.message.author.voice:
-    return
-  if not ctx.guild in map.keys() or map[ctx.guild] == None:
-    map[ctx.guild] = guild_data(ctx)
-  guild = map[ctx.guild]
-  if not guild.is_connected():
-    await guild.join_channel(ctx.message.author.voice.channel)
-  await guild.lefny()
-
 @bot.event
 async def on_command_error(ctx, err):
   if isinstance(err, commands.CommandNotFound):
